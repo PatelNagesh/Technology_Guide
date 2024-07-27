@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Language Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 800px;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .container {
+            background: rgb(236, 175, 175);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px; /* Add space between checkbox and label */
+        }
+
+        select, input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4cae4c;
+        }
+
+        .img {
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-bottom: 20px; /* Add space below image */
+        }
+
+        .lang {
+            background-color: rgb(245, 116, 116);
+            border-radius: 7px;
+            border: black 2px solid;
+            padding: 10px;
+            overflow-x: auto; /* Ensure table is scrollable if needed */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px; /* Adjust padding for better spacing */
+            vertical-align: top; /* Align text at the top */
+            font-weight: 600;
+        }
+
+        tr {
+            margin-bottom: 10px; /* Add space between rows */
+        }
+
+        #text {
+            display: none;
+            font-weight: bold;
+            color: rgb(118, 9, 9);
+            text-align: center;
+            margin-top: 20px;
+        }
+        #field{
+            background-color: rgb(245, 116, 116);
+            font-weight: bold;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Programming Language Recommendation</h1>
+        <form id="recommendForm">
+            <label for="learnedLang">Programming Language You Know:</label>
+            <div class="img"></div>
+            <div class="lang">
+                <table>
+                    <tr>
+                        <td><input type="checkbox" name="c" id="myCheck1" onclick="updateText()"> C</td>
+                        <td><input type="checkbox" name="c++" id="myCheck2" onclick="updateText()"> C++</td>
+                        <td><input type="checkbox" name="HTML" id="myCheck3" onclick="updateText()"> HTML</td>
+                        <td><input type="checkbox" name="css" id="myCheck4" onclick="updateText()"> CSS</td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>
+                        <td><input type="checkbox" name="Js" id="myCheck5" onclick="updateText()"> JAVA SCRIPT</td>
+                        <td><input type="checkbox" name="python" id="myCheck6" onclick="updateText()"> PYTHON</td>
+                        <td><input type="checkbox" name="react js" id="myCheck7" onclick="updateText()"> REACT JS</td>
+                        <td><input type="checkbox" name="my sql" id="myCheck8" onclick="updateText()"> MY SQL</td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>
+                        <td><input type="checkbox" name="php" id="myCheck9" onclick="updateText()"> PHP</td>
+                        <td><input type="checkbox" name="mongo db" id="myCheck10" onclick="updateText()"> MONGO DB</td>
+                        <td><input type="checkbox" name="angular js" id="myCheck11" onclick="updateText()"> ANGULAR JS</td>
+                        <td><input type="checkbox" name="node js" id="myCheck12" onclick="updateText()"> NODE JS</td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>
+                        <td><input type="checkbox" name="perl" id="myCheck13" onclick="updateText()"> PERL</td>
+                        <td><input type="checkbox" name="ruby" id="myCheck14" onclick="updateText()"> RUBY</td>
+                        <td><input type="checkbox" name="jsp" id="myCheck15" onclick="updateText()"> JSP</td>
+                        <td><input type="checkbox" name="sql" id="myCheck16" onclick="updateText()"> SQL</td>
+                    </tr>
+                </table>
+            </div>
+            <label for="field">Desired Field:</label>
+            <select id="field" name="field" required>
+                <option value="Web Development">Web Development</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Mobile Development">Mobile Development</option>
+                <option value="Game Development">Game Development</option>
+                <option value="DevOps">DevOps</option>
+            </select>
+            <button type="submit">Get Recommendations</button>
+        </form>
+        <p id="text"></p>
+    </div>
+
+    <script>
+        const checkboxes = [
+            { id: 'myCheck1', name: 'C' },
+            { id: 'myCheck2', name: 'C++' },
+            { id: 'myCheck3', name: 'HTML' },
+            { id: 'myCheck4', name: 'CSS' },
+            { id: 'myCheck5', name: 'JAVA SCRIPT' },
+            { id: 'myCheck6', name: 'PYTHON' },
+            { id: 'myCheck7', name: 'REACT JS' },
+            { id: 'myCheck8', name: 'MY SQL' },
+            { id: 'myCheck9', name: 'PHP' },
+            { id: 'myCheck10', name: 'MONGO DB' },
+            { id: 'myCheck11', name: 'ANGULAR JS' },
+            { id: 'myCheck12', name: 'NODE JS' },
+            { id: 'myCheck13', name: 'PERL' },
+            { id: 'myCheck14', name: 'RUBY' },
+            { id: 'myCheck15', name: 'JSP' },
+            { id: 'myCheck16', name: 'SQL' }
+        ];
+
+        function updateText() {
+            const selectedLanguages = checkboxes
+                .filter(box => document.getElementById(box.id).checked)
+                .map(box => box.name);
+
+            const textElement = document.getElementById('text');
+            if (selectedLanguages.length > 0) {
+                var v = 'Selected Languages: ' + selectedLanguages.join(', ');
+                textElement.textContent = v;
+                textElement.style.display = 'block';
+            } else {
+                textElement.style.display = 'none';
+            }
+        }
+
+        const languages = [
+            { id: 'js', name: 'JavaScript', details: 'JavaScript is a versatile language used for both client-side and server-side development.', image: 'https://static.vecteezy.com/system/resources/previews/027/127/463/original/javascript-logo-javascript-icon-transparent-free-png.png' },
+            { id: 'html', name: 'HTML', details: 'HTML is the standard markup language for creating web pages.', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/2048px-HTML5_logo_and_wordmark.svg.png' },
+            { id: 'css', name: 'CSS', details: 'CSS is used to style and layout web pages.', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO5ryTY9VShCV5uJWhoBXkcxxlFB8O5bbxGA&s' },
+            { id: 'python', name: 'Python', details: 'Python is widely used in data science for its simplicity and powerful libraries.', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxe6IR3EKgALq0lEUvpW3GmPH8rpAv1cK0_w&s' },
+            { id: 'r', name: 'R', details: 'R is a language and environment for statistical computing and graphics.', image: 'https://www.datanami.com/wp-content/uploads/2017/08/R-language-300x235.png' },
+            { id: 'sql', name: 'SQL', details: 'SQL is used to manage and manipulate relational databases.', image: 'https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/sql/sql.png' },
+            { id: 'kotlin', name: 'Kotlin', details: 'Kotlin is a modern language that interoperates fully with Java and is used for Android development.', image: 'https://global.discourse-cdn.com/business5/uploads/kotlinlang/original/2X/f/f440c5115af253e7b8dfdd241a45ccb8e494e8a6.png' },
+            { id: 'swift', name: 'Swift', details: 'Swift is a powerful language for iOS and macOS app development.', image: 'https://logowik.com/content/uploads/images/558_swift_logo_icon.jpg' },
+            { id: 'java', name: 'Java', details: 'Java is a popular language for developing Android apps.', image: 'https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/181_Java_logo_logos-512.png' },
+            { id: 'cpp', name: 'C++', details: 'C++ is used for high-performance game development.', image: 'https://w7.pngwing.com/pngs/46/626/png-transparent-c-logo-the-c-programming-language-computer-icons-computer-programming-source-code-programming-miscellaneous-template-blue.png' },
+            { id: 'csharp', name: 'C#', details: 'C# is used with the Unity game engine for developing games.', image: 'https://w7.pngwing.com/pngs/498/19/png-transparent-csharp-original-logo-icon-thumbnail.png' },
+            { id: 'unity', name: 'Unity', details: 'Unity is a cross-platform game engine used to create games.', image: 'https://i.redd.it/tu3gt6ysfxq71.png' },
+            { id: 'go', name: 'Go', details: 'Go is used for building efficient and scalable software.', image: 'https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png' },
+            { id: 'ruby', name: 'Ruby', details: 'Ruby is used for infrastructure automation and web development.', image: 'https://banner2.cleanpng.com/20180811/fwb/kisspng--5b6f68be63a406.9717291515340279664081.jpg' }
+        ];
+
+        const fieldPreferences = {
+            'Web Development': ['js', 'html', 'css'],
+            'Data Science': ['python', 'r', 'sql'],
+            'Mobile Development': ['kotlin', 'swift', 'java'],
+            'Game Development': ['cpp', 'csharp', 'unity'],
+            'DevOps': ['python', 'go', 'ruby']
+        };
+
+        const form = document.getElementById('recommendForm');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const field = document.getElementById('field').value;
+            const selectedLanguages = checkboxes
+                .filter(box => document.getElementById(box.id).checked)
+                .map(box => box.name);
+
+            // Store the form data in local storage
+            localStorage.setItem('field', field);
+            localStorage.setItem('selectedLanguages', JSON.stringify(selectedLanguages));
+
+
+            const preferredLangIds = fieldPreferences[field] || [];
+            const preferredLangs = languages.filter(lang => preferredLangIds.includes(lang.id));
+            const otherLangs = languages.filter(lang => !preferredLangIds.includes(lang.id));
+
+            const params = new URLSearchParams({
+                field: field,
+                preferredLangs: JSON.stringify(preferredLangs),
+                otherLangs: JSON.stringify(otherLangs)
+            });
+
+            // Redirect to recommendations.html
+            window.location.href = 'recommendations.html?' + params.toString();
+        });
+    </script>
+</body>
+</html>
+    
